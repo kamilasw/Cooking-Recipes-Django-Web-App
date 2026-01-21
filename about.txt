@@ -1,0 +1,82 @@
+Cooking Recipes Web App
+
+User can:
+- create recipes
+	 - create a recipe
+	 - make it private or public
+	 - use preexisting ingredients or create new ones
+- update their recipes
+	- change their attributes
+- delete their recipes
+- load public recipes list
+	- filter by ingredient (shows: recipes that include an ingredient/s)
+	- filter by time (shows: recipes that take less or equal amount of time to make)
+	- search by title (input min 2 characters)
+	- click on the recipe to load it's page
+- load their recipes list
+	- contains their recipes
+	- same filtering as in public list (ingredient and time)
+	- search by title
+
+MODEL:
+	
+- Recipe:
+	recipe_id: primary key
+	name: text
+	description: long text
+	instructions: long text
+	time_minutes: int (stored as minutes)
+	is_public: boolean
+	user_id: foreign key (user: creator of the recipe)
+- Ingredient:
+	ingredient_id: primary key
+	name: text (unique)
+- RecipeIngredient:
+	recipeingredient_ID: primary key
+	recipe_id: foreign key (recipe: for which recipe this is  ingredient used)
+	ingredient_id: foreign key (ingredient: which one is used)
+	amount: decimal 
+	unit: {kg, g, ml, tsp, tbsp, cup}
+
+VIEWS:
+1) public recipe list: GET /recipes/
+	shows the public recipes
+	filtering/search here:
+		search, max_time, ingredient (list)
+2) recipe page:  GET /recipes/<id>/
+	shows public read only recipes page
+3) private recipes: GET /my/recipes/
+	shows the owned recipes of user
+	filtering/search here
+4) private recipe page: GET /my/recipes/<id>/
+	shows page for an owned by current user recipe with details 
+5) GET and POST /my/recipes/new/
+	get: show empty form
+	post: create the new recipe
+6) GET + POST /my/recipes/<id>/edit/
+	edit their own recipe
+	get: show the edit form
+	post: send the edits
+7) delete recipe: POST /my/recipes/<id>/delete/
+	delete their own recipe
+8) POST /api/ingredients/ 
+	creating a new distinct ingredient
+	POST /api/recipes/<id>/ingredients/
+		AJAX adds it to the recipe
+
+TEMPLATES:
+- /base.html  
+- /partials/navbar.html
+- /partials/messages.html
+- /recipes/public_list.html
+- /recipes/public_detail.html
+- /recipes/my_list.html
+- /recipes/my_detail.html
+- /recipes/recipe_form.html
+
+
+
+
+
+
+
