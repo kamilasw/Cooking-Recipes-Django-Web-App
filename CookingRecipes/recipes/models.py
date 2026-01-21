@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator, MinLengthValidator
 # Create your models here.
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(validators=[MinLengthValidator(3)], max_length=200)
     description = models.TextField(blank=True)
     instructions = models.TextField(blank=True)
     prep_time = models.PositiveIntegerField(validators=[MinValueValidator(1)]) #time must be >=1 (minutes)
@@ -16,7 +16,7 @@ class Recipe(models.Model):
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=120, unique=True )
+    name = models.CharField(max_length=120, unique=True ,validators=[MinLengthValidator(3)])
     def __str__(self) -> str: return self.name
     def save(self, *args, **kwargs):
         self.name=self.name.lower()  # all ingredients must be lowercase

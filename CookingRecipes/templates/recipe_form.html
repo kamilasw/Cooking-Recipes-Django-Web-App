@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if mode == "edit" %}Edit Recipe{% else %}New Recipe{% endif %}</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% if mode == "edit" %}Save{% else %}Create{% endif %}</button>
+</form>
+
+{% if mode == "edit" %}
+  <hr>
+  <h2>Ingredients</h2>
+  <ul id="ingredients-list">
+    {% for ri in ingredients %}
+      <li>{{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name }}</li>
+    {% empty %}
+      <li>No ingredients yet.</li>
+    {% endfor %}
+  </ul>
+
+
+{% endif %}
+
+{% endblock %}

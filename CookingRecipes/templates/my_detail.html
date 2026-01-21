@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ recipe.name }}</h1>
+
+    <p>
+        <a href="{% url 'my_recipe_edit' recipe.pk %}">
+            <button type="button">Edit recipe</button>
+        </a>
+    </p>
+
+    <p><b>Time:</b> {{ recipe.prep_time }} min</p>
+    <p><b>Visibility:</b> {% if recipe.is_public %}Public{% else %}Private{% endif %}</p>
+
+    {% if ingredients %}
+
+      <h2>Ingredients</h2>
+      <ul>
+        {% for ri in ingredients %}
+          <li>
+              {{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name|capfirst }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h2>Instructions</h2>
+    <p>{{ recipe.instructions|linebreaks }}</p>
+{% endblock %}

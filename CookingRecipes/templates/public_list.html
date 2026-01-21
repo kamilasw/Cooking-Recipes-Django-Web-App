@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Public Recipes{% endblock %}
+
+{% block content %}
+    <h1>Public Recipes</h1>
+    <ul>
+    {% for recipe in recipes %}
+        <li>
+        <a href="{% url 'public_recipe_detail' recipe.pk  %}">{{recipe.name}}</a>
+        </li>
+        {% empty %}
+            <li>
+            No public recipes yet.
+            </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

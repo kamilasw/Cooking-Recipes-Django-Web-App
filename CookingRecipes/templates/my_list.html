@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}My recipes{% endblock %}
+
+{% block content %}
+    <p>
+        <a href="{% url 'my_recipe_new' %}">
+            <button type="button">Create a recipe</button>
+        </a>
+    </p>
+
+    <h1>My recipes</h1>
+
+    <ul>
+      {% for r in recipes %}
+
+        <li>
+          <a href="{% url 'my_recipe_detail' r.pk %}">{{ r.name }}</a>
+            <a href="{% url 'my_recipe_edit' r.pk %}">Edit</a>
+          {% if r.is_public %}(public){% else %}(private){% endif %}
+        </li>
+
+      {% empty %}
+        <li>You don’t have any recipes yet.</li>
+      {% endfor %}
+    </ul>
+{% endblock %}

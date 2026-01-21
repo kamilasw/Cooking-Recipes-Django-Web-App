@@ -25,7 +25,7 @@ MODEL:
 	name: text
 	description: long text
 	instructions: long text
-	time_minutes: int (stored as minutes)
+	prep_time: int (stored as minutes)
 	is_public: boolean
 	user_id: foreign key (user: creator of the recipe)
 - Ingredient:
@@ -65,14 +65,14 @@ VIEWS:
 		AJAX adds it to the recipe
 
 TEMPLATES:
-- /base.html  
-- /partials/navbar.html
-- /partials/messages.html
-- /recipes/public_list.html
-- /recipes/public_detail.html
-- /recipes/my_list.html
-- /recipes/my_detail.html
-- /recipes/recipe_form.html
+base.html  
+navbar.html
+messages.html
+public_list.html
+public_detail.html
+my_list.html
+my_detail.html
+recipe_form.html
 
 
 

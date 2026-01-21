@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ recipe.name }}</h1>
+
+    <p><b>Time:</b>{{ recipe.prep_time }}min</p>
+
+    {% if ingredients %}
+      <h2>Ingredients</h2>
+      <ul>
+        {% for i in ingredients %}
+          <li>
+            {{ i.amount }} {{ i.unit }} {{ i.ingredient.name|capfirst }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h2>Instructions</h2>
+    <p>{{ recipe.instructions|linebreaks }}</p>
+
+
+{% endblock %}
