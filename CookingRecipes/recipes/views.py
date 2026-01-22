@@ -9,10 +9,36 @@ from django.contrib import messages
 # Create your views here.
 
 
+
 # public recipes:
 def public_recipe_list(request):
     recipes = Recipe.objects.filter(is_public=True).order_by("-id")
-    return render(request,"public_list.html",{"recipes":recipes})
+
+    q = (request.GET.get("q") or "").strip()
+    max_time = request.GET.get("max_time")
+    ingredient_ids = request.GET.getlist("ingredient")
+
+    if len(q)>=2:
+        recipes = recipes.filter(name__icontains=q).order_by("-id")
+
+    if max_time and max_time.isdigit() and int(max_time)>0:
+            recipes = recipes.filter(prep_time__lte=max_time).order_by("-id")
+
+    if ingredient_ids:
+        for ing_id in ingredient_ids:
+            recipes = recipes.filter(recipe_ingredients__ingredient_id=ing_id).order_by("-id")
+
+    ingredients = Ingredient.objects.order_by("name")
+    return render(
+        request,
+        "public_list.html",
+        {
+            "recipes":recipes,
+            "ingredients":ingredients,
+            "q":q,
+            "max_time":max_time,
+            "ingredient_ids":ingredient_ids,}
+            )
 
 def public_recipe_detail(request,pk):
     recipe = get_object_or_404(Recipe,pk=pk, is_public=True)
@@ -24,7 +50,36 @@ def public_recipe_detail(request,pk):
 @login_required(login_url='/accounts/login/')
 def my_recipe_list(request):
     recipes = Recipe.objects.filter(user=request.user).order_by("-id")
-    return render(request,"my_list.html",{"recipes":recipes})
+
+    q = (request.GET.get("q") or "").strip()
+    max_time = request.GET.get("max_time")
+    ingredient_ids = request.GET.getlist("ingredient")
+
+    if len(q) >= 2:
+        recipes = recipes.filter(name__icontains=q).order_by("-id")
+
+    if max_time and max_time.isdigit() and int(max_time)>0:
+        try:
+            recipes = recipes.filter(prep_time__lte=max_time).order_by("-id")
+        except ValueError:
+            pass
+
+    if ingredient_ids:
+        for ing_id in ingredient_ids:
+            recipes = recipes.filter(recipe_ingredients__ingredient_id=ing_id).order_by("-id")
+
+    ingredients = Ingredient.objects.order_by("name")
+
+    return render(
+        request,
+        "my_list.html",
+        {
+            "recipes":recipes,
+            "ingredients":ingredients,
+            "q":q,
+            "max_time":max_time,
+            "ingredient_ids":ingredient_ids,
+        })
 
 @login_required(login_url='/accounts/login/')
 def my_recipe_detail(request,pk):

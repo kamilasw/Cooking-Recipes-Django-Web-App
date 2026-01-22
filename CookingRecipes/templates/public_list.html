@@ -4,6 +4,60 @@
 
 {% block content %}
     <h1>Public Recipes</h1>
+
+    <form method="get" style="margin-bottom: 1rem;">
+        <div>
+            <label for="q">
+                Search for title
+            </label><br>
+            <input
+                id="q"
+                type="text"
+                name="q"
+                value="{{ q }}"
+                minlength="2"
+                placeholder="min 2 characters">
+        </div>
+
+        <div style="margin-top: 0.5rem;">
+            <label for="max_time">
+                Max time (minutes)
+            </label><br>
+            <input
+                id="max_time"
+                type="number"
+                name="max_time"
+                value="{{ max_time }}"
+                min="1"
+                placeholder="e.g. 35"
+            >
+        </div>
+
+        <div style="margin-top: 0.5rem">
+            <label for="ingredient">
+                Ingredients in the recipe
+            </label>
+            <select id="ingredient" name="ingredient" multiple size="6">
+                {% for ing in ingredients %}
+                    <option value="{{ ing.id }}"
+                            {% if ing.id|stringformat:"s" in ingredient_ids %}
+                                selected
+                            {% endif %}>
+                    {{ ing.name | capfirst }}
+                    </option>
+                {% endfor %}
+            </select>
+
+        </div>
+
+        <div style="margin-top: 0.75rem">
+            <button type="submit">Apply</button>
+            <a href="{%  url 'public_recipe_list' %}">Cancel</a>
+
+        </div>
+
+    </form>
+
     <ul>
     {% for recipe in recipes %}
         <li>
