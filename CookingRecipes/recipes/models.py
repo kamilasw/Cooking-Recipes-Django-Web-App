@@ -11,6 +11,7 @@ class Recipe(models.Model):
     instructions = models.TextField(blank=True)
     prep_time = models.PositiveIntegerField(validators=[MinValueValidator(1)]) #time must be >=1 (minutes)
     is_public = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='recipe_images',blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='recipes')
     def __str__(self) -> str: return self.name
 

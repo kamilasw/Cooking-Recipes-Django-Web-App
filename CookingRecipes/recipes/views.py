@@ -9,7 +9,7 @@ from django.contrib import messages
 # Create your views here.
 
 
-# public recipes
+# public recipes:
 def public_recipe_list(request):
     recipes = Recipe.objects.filter(is_public=True).order_by("-id")
     return render(request,"public_list.html",{"recipes":recipes})
@@ -19,7 +19,7 @@ def public_recipe_detail(request,pk):
     ingredients = recipe.recipe_ingredients.select_related("ingredient")
     return render(request,"public_detail.html", {"recipe":recipe, "ingredients":ingredients})
 
-# "my" public and private recipes
+# "my" public and private recipes:
 
 @login_required(login_url='/accounts/login/')
 def my_recipe_list(request):
@@ -37,7 +37,7 @@ def my_recipe_detail(request,pk):
 @login_required(login_url='/accounts/login/')
 def my_recipe_new(request):
     if request.method == "POST": # means that form should be filled in
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.user = request.user
@@ -55,13 +55,13 @@ def my_recipe_edit(request,pk):
     recipe = get_object_or_404(Recipe,pk=pk,user=request.user)
 
     if request.method == "POST":
-        form = RecipeForm(request.POST,instance=recipe)
+        form = RecipeForm(request.POST, request.FILES , instance=recipe)
         if form.is_valid():
             form.save()
             messages.success(request,"Recipe updated")
             return redirect("my_recipe_detail", pk=recipe.pk)
         else:
-            messages.failure(request,"Recipe not updated")
+            messages.error(request,"Recipe not updated")
             return redirect("my_recipe_list")
     else:
         form = RecipeForm(instance=recipe)
@@ -82,7 +82,7 @@ def my_recipe_delete(request,pk):
     messages.success(request,"Recipe deleted")
     return redirect("my_recipe_list")
 
-# AJAX api for ingredient managing
+# AJAX api for ingredient managing:
 
 @login_required(login_url='/accounts/login/')
 @require_POST
@@ -99,7 +99,8 @@ def create_ingredient(request):
 def add_ingredient_to_recipe(request,pk):
     recipe = get_object_or_404(Recipe,pk=pk,user=request.user)
 
-    ingredient = request.POST.get("ingredient")
+    ingredient_id = request.POST.get("ingredient")
+    ingredient = get_object_or_404(Ingredient, pk=ingredient_id)
     amount = request.POST.get("amount")
     unit = request.POST.get("unit")
 

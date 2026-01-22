@@ -1,4 +1,5 @@
-Cooking Recipes Web App
+Cooking Recipes Web App 
+the main idea for this app before i start implementing it
 
 User can:
 - create recipes

@@ -6,7 +6,7 @@ from django.forms import modelformset_factory, inlineformset_factory
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ["name","description","instructions","prep_time","is_public"]
+        fields = ["name","description","instructions","prep_time","is_public","image"]
         widgets = {
             "description": forms.Textarea(attrs={"rows":4}),
             "instructions": forms.Textarea(attrs={"rows":4}),

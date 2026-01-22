@@ -11,6 +11,14 @@
         </a>
     </p>
 
+    {% if recipe.description %}
+
+        <p>{{ recipe.description }}</p>
+
+    {% else %}
+
+    {% endif %}
+
     <p><b>Time:</b> {{ recipe.prep_time }} min</p>
     <p><b>Visibility:</b> {% if recipe.is_public %}Public{% else %}Private{% endif %}</p>
 
@@ -28,4 +36,8 @@
 
     <h2>Instructions</h2>
     <p>{{ recipe.instructions|linebreaks }}</p>
+
+    {% if recipe.image %}
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 420px; height:auto;">
+    {% endif %}
 {% endblock %}

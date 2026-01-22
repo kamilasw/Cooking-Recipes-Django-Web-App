@@ -21,5 +21,8 @@
     <h2>Instructions</h2>
     <p>{{ recipe.instructions|linebreaks }}</p>
 
+    {% if recipe.image %}
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 420px; height:auto;">
+    {% endif %}
 
 {% endblock %}
