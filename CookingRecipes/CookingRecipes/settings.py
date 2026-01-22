@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'recipes'
+    'recipes',
+    'accounts'
 
 ]
 
@@ -127,3 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# login
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/my/recipes/'
+LOGOUT_REDIRECT_URL = '/recipes/'
+
+# emails go to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = "noreply@cookingrecipes.com"
