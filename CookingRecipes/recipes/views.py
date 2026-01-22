@@ -42,9 +42,10 @@ def my_recipe_new(request):
             recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.save()
+            messages.success(request, "Recipe created")
             return redirect("my_recipe_detail", pk=recipe.pk)
         else:
-            return redirect("my_recipe_list")
+            messages.success(request, "Recipe not created")
     else: # means the form was only opened now
         form = RecipeForm()
     return render(request,"recipe_form.html",{"form":form,"mode":"create"})
@@ -62,7 +63,6 @@ def my_recipe_edit(request,pk):
             return redirect("my_recipe_detail", pk=recipe.pk)
         else:
             messages.error(request,"Recipe not updated")
-            return redirect("my_recipe_list")
     else:
         form = RecipeForm(instance=recipe)
 
