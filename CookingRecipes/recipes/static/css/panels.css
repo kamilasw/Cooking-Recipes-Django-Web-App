@@ -1,5 +1,4 @@
 
-
 .panel{
     background: var(--panel);
     border: 1px solid var(--panel-border);
@@ -14,6 +13,7 @@
     margin-bottom: var(--space-3);
 }
 
+
 .page-header-split{
     display: flex;
     justify-content: space-between;
@@ -22,12 +22,17 @@
     flex-wrap: wrap;
 }
 
+
 .page-title{
     margin: 0;
     font-size: 2rem;
 }
 
+
 .page-subtitle{
     margin: var(--space-1) 0 0;
     color: var(--muted);
 }
+
+
+

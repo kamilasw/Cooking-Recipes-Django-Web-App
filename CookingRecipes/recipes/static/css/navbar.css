@@ -1,11 +1,9 @@
 
 
-
 .topbar{
     position: sticky;
     top: 0;
     z-index: 10;
-
     background: var(--bg);
     border-bottom: 0.15rem solid var(--accent);
 }
@@ -20,17 +18,20 @@
     min-height: 3.2rem;
 }
 
+
 .site-title{
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
 }
 
+
 .main-links{
     display: flex;
     gap: var(--space-2);
     flex-wrap: wrap;
 }
+
 
 .main-link{
     text-decoration: none;
@@ -39,16 +40,19 @@
     border-radius: 999px;
 }
 
+
 .main-link:hover{
     color: var(--accent);
     background: var(--accent-soft);
 }
+
 
 .account-actions{
     display: flex;
     gap: var(--space-2);
     align-items: center;
 }
+
 
 .topbar .main-link{
     padding: 0.4rem 0.8rem;

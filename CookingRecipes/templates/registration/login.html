@@ -1,17 +1,38 @@
 {% extends "base.html" %}
 
+{% block title %}Log in{% endblock %}
+
 {% block content %}
 
-  <h1>Log in</h1>
+    <section class="page-header">
+        <h1 class="page-title">Log in</h1>
+    </section>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log in</button>
-  </form>
+    <section class="panel">
+        <form method="post" class="recipe-form" novalidate>
+        {% csrf_token %}
 
-  <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
 
-  <p>No account? <a href="{% url 'signup' %}">Sign up</a></p>
+        <div class="django-fields">
+            {{ form.as_p }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button button-main">Log in
+            </button>
+            <button type="reset" class="button button-quiet">
+                Clear
+            </button>
+            <a class="button button-quiet" href="{% url 'password_reset' %}">Forgot password?</a>
+        </div>
+
+        </form>
+
+        <p class="text-block">
+            No account?
+            <a class="link" href="{% url 'signup' %}">Sign up</a>
+        </p>
+    </section>
+
 
 {% endblock %}

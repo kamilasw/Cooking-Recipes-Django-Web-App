@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from .models import Unit
+from decimal import Decimal, InvalidOperation
 # Create your views here.
 
 
@@ -98,7 +100,7 @@ def my_recipe_new(request):
             recipe.user = request.user
             recipe.save()
             messages.success(request, "Recipe created")
-            return redirect("my_recipe_detail", pk=recipe.pk)
+            return redirect("my_recipe_edit", pk=recipe.pk)
         else:
             messages.success(request, "Recipe not created")
     else: # means the form was only opened now
@@ -123,10 +125,20 @@ def my_recipe_edit(request,pk):
 
     ingredients = recipe.recipe_ingredients.select_related("ingredient")
 
+    all_ingredients = Ingredient.objects.order_by("name")
+    unit_choices= Unit.choices
+
     return render(
         request,
         "recipe_form.html",
-        {"form": form, "mode": "edit", "recipe": recipe, "ingredients": ingredients},
+        {
+            "form": form,
+            "mode": "edit",
+            "recipe": recipe,
+            "ingredients": ingredients,
+            "all_ingredients":all_ingredients,
+            "unit_choices":unit_choices,
+        },
     )
 
 @login_required(login_url='/accounts/login/')
@@ -144,7 +156,7 @@ def my_recipe_delete(request,pk):
 def create_ingredient(request):
     name = (request.POST.get("name") or "").strip()
     if len(name) <3:
-        return JsonResponse({"error":"name is too short (min 3 characters)"})
+        return JsonResponse({"ok":False,"error":"name is too short (min 3 characters)"}, status=400)
     else:
         ingredient, created = Ingredient.objects.get_or_create(name=name.lower())
         return JsonResponse({"ok": True, "id": ingredient.id, "name": ingredient.name, "created": created})
@@ -155,20 +167,49 @@ def add_ingredient_to_recipe(request,pk):
     recipe = get_object_or_404(Recipe,pk=pk,user=request.user)
 
     ingredient_id = request.POST.get("ingredient")
+
+    if not ingredient_id:
+        return JsonResponse({
+            "ok": False,
+            "error": "ingredient is required"},
+        status=400)
+
     ingredient = get_object_or_404(Ingredient, pk=ingredient_id)
     amount = request.POST.get("amount")
-    unit = request.POST.get("unit")
+    unit = (request.POST.get("unit") or "").strip()
+    valid_units = {v for (v,_) in Unit.choices}
+    if unit not in valid_units:
+        return JsonResponse({"ok": False, "error": "invalid unit"},status=400)
 
-    if not ingredient:
-        return JsonResponse({"error":"ingredient is required"})
     try:
-        ing = RecipeIngredient.objects.create(
+        amount = Decimal(amount)
+        if amount <= 0:
+            raise InvalidOperation()
+    except(InvalidOperation,TypeError,ValueError):
+        return JsonResponse({"ok": False, "error": "invalid amount"},status=400)
+
+
+    try:
+
+        ri = RecipeIngredient.objects.create(
             recipe=recipe,
             ingredient=ingredient,
             amount=amount,
             unit=unit
         )
     except IntegrityError:
-        return JsonResponse({"error":"this ingredient is already added"})
+        return JsonResponse({
+            "ok":False,
+            "error":"this ingredient is already added"},status=400)
 
-    return JsonResponse({"ok": True, "ingredient": ing.ingredient, "amount": ing.amount, "unit": ing.unit})
+    return JsonResponse({
+        "ok": True,
+        "ri_id":ri.id,
+        "ingredient": {
+            "id":ingredient.id,
+            "name":ingredient.name,
+        },
+        "amount": str(ri.amount),
+        "unit": ri.unit
+    })
+

@@ -22,11 +22,6 @@
     color: var(--text);
 }
 
-.form-label{
-    font-weight: 600;
-    color: var(--text);
-}
-
 .form-hint{
     color: var(--muted);
     font-size: 0.95rem;
@@ -56,6 +51,74 @@
 .form-select[multiple]{
     min-height: 10rem;
     padding: 0.6rem;
+}
+
+.recipe-form .django-fields p{
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.recipe-form .django-fields label{
+    font-weight: 600;
+}
+
+.recipe-form .django-fields input,
+.recipe-form .django-fields select,
+.recipe-form .django-fields textarea{
+    width: min(40rem, 100%);
+    padding: 0.7rem 0.85rem;
+    border-radius: calc(var(--radius) * 0.65);
+    border: 0.08rem solid var(--panel-border);
+    background: var(--panel);
+    color: var(--text);
+    font: inherit;
+}
+
+.recipe-form .django-fields small,
+.recipe-form .django-fields .helptext{
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.recipe-form .django-fields input[type="checkbox"]{
+    width: auto;
+    margin: 0;
+}
+
+.recipe-form .django-fields p:has(input[type="checkbox"]){
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+/* removes the "change" text because i didnt know how format it pretty */
+.recipe-form .django-fields p:has(input[type="file"]){
+    font-size: 0;
+}
+
+.recipe-form .django-fields p:has(input[type="file"]) a,
+.recipe-form .django-fields p:has(input[type="file"]) label,
+.recipe-form .django-fields p:has(input[type="file"]) input,
+.recipe-form .django-fields p:has(input[type="file"]) span{
+    font-size: 1rem;
+}
+
+/* errors */
+.recipe-form .django-fields ul{
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    border-radius: calc(var(--radius) * 0.65);
+    border: 0.08rem solid color-mix(in srgb, #b23a3a 35%, var(--panel-border));
+    background: color-mix(in srgb, #b23a3a 12%, var(--panel));
+    color: color-mix(in srgb, #b23a3a 85%, var(--text));
+    font-weight: 600;
+}
+
+.recipe-form .django-fields ul li{
+    margin: 0;
 }
 
 .form-actions{

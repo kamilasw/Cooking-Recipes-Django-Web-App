@@ -1,16 +1,35 @@
 {% extends "base.html" %}
 
+{% block title %}Sign up{% endblock %}
+
 {% block content %}
-  <h1>Sign up</h1>
 
-  <form method="post">
+    <section class="page-header">
 
-    {% csrf_token %}
-    {{ form.as_p }}
+        <h1 class="page-title">Sign up</h1>
+        <p class="page-subtitle">Create an account to manage your recipes.</p>
 
-    <button type="submit">Create account</button>
-  </form>
+    </section>
 
-  <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    <section class="panel">
+        <form method="post" class="recipe-form" novalidate>
+
+        {% csrf_token %}
+
+        <div class="django-fields">
+            {{ form.as_p }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button button-main">Create account</button>
+            <button type="reset" class="button button-quiet">
+                Clear
+            </button>
+            <a class="button button-quiet" href="{% url 'login' %}">I already have an account</a>
+        </div>
+
+        </form>
+
+    </section>
 
 {% endblock %}

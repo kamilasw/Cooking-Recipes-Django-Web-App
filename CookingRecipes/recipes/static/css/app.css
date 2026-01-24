@@ -23,32 +23,52 @@
     --max-width: 980px;
 }
 
-a:not(.button){
-    color:var(--accent);
+html{
+    font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+    line-height: 1.45;
 }
 
-a:not(.button):visited{
-    color:var(--accent);
-}
-
-a:not(.button):hover{
-    color:color-mix(in srgb,var(--accent) 80%,black);
-}
 
 *{
     box-sizing: border-box;
+    font-family: inherit;
 }
+
 
 html, body{
     height: 100%;
 }
 
-body.page{
 
+body.page{
     margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
+}
+
+
+a:not(.button){
+    color: var(--accent);
+}
+
+
+a:not(.button):visited{
+    color: var(--accent);
+}
+
+
+a:not(.button):hover{
+    color: color-mix(in srgb, var(--accent) 80%, black);
 }
 
 
@@ -56,8 +76,8 @@ body.page{
     padding: var(--space-5) var(--space-3);
 }
 
+
 .content{
     width: min(var(--max-width), 100%);
     margin: 0 auto;
 }
-

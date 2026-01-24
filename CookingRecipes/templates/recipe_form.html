@@ -33,19 +33,8 @@
 
 {% if mode == "edit" %}
 
-    <section class="panel">
+    {% include "ingredients.html" %}
 
-        <h2 class="section-title">Ingredients</h2>
-
-        <ul id="ingredients-list" class="bullets">
-            {% for ri in ingredients %}
-                <li>{{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name }}</li>
-            {% empty %}
-                <li class="empty-note">No ingredients yet.</li>
-            {% endfor %}
-        </ul>
-
-    </section>
 {% endif %}
 
 {% endblock %}
