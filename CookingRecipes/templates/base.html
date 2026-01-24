@@ -1,14 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Cooking Recipies{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/panels.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/photo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lists.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
 </head>
-<body>
+
+<body class="page">
     {% include "navbar.html" %}
-    {% include "messages.html" %}
-    <main>
-        {% block content %}{% endblock %}
+    <main class="page-content">
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
 
     </main>
 

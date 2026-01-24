@@ -3,25 +3,46 @@
 {% block title %}My recipes{% endblock %}
 
 {% block content %}
-    <p>
-        <a href="{% url 'my_recipe_new' %}">
-            <button type="button">Create a recipe</button>
-        </a>
-    </p>
 
-    <h1>My recipes</h1>
+    <section class="page-header page-header-split">
+        <div>
+            <h1 class="page-title">My Recipes</h1>
+        </div>
 
-    <ul>
+        <a class="button button-main" href="{% url 'my_recipe_new' %}">Create recipe</a>
+    </section>
+
+    <section class="panel">
+
+     <ul class="recipe-list">
       {% for r in recipes %}
 
-        <li>
-          <a href="{% url 'my_recipe_detail' r.pk %}">{{ r.name }}</a>
-            <a href="{% url 'my_recipe_edit' r.pk %}">Edit</a>
-          {% if r.is_public %}(public){% else %}(private){% endif %}
+        <li class="recipe-line">
+
+
+        <a class="recipe-link" href="{% url 'my_recipe_detail' r.pk %}">{{ r.name }}</a>
+
+
+        <div class="line-actions">
+            <span class="visibility-tag">
+                 {% if r.is_public %}Public{% else %}Private{% endif %}
+            </span>
+            <a class="button button-small button-quiet" href="{% url 'my_recipe_edit' r.pk %}">Edit</a>
+
+        </div>
+
+
         </li>
 
       {% empty %}
-        <li>You don’t have any recipes yet.</li>
+        <li class="empty-note">You don’t have any recipes yet.</li>
       {% endfor %}
     </ul>
+
+    </section>
+
+
+
+
+
 {% endblock %}

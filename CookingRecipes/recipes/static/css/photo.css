@@ -1,0 +1,14 @@
+
+.photo-block{
+    margin-top: var(--space-3);
+}
+
+.recipe-photo{
+    display: block;
+    width: 100%;
+    max-width: 70ch;
+    height: auto;
+    margin-inline: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--panel-border);
+}

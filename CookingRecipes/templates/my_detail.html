@@ -3,41 +3,62 @@
 {% block title %}{{ recipe.name }}{% endblock %}
 
 {% block content %}
-    <h1>{{ recipe.name }}</h1>
+    <section class="page-header page-header-split">
+        <div>
+            <h1 class="page-title">{{ recipe.name }}</h1>
 
-    <p>
-        <a href="{% url 'my_recipe_edit' recipe.pk %}">
-            <button type="button">Edit recipe</button>
-        </a>
-    </p>
+            <div class="info-line">
 
-    {% if recipe.description %}
+                <span class="info-item"><strong>Time:</strong> {{ recipe.prep_time }} min</span>
 
-        <p>{{ recipe.description }}</p>
+                <span class="info-item">
 
-    {% else %}
+                    <strong>Visibility:</strong>
 
-    {% endif %}
+                    <span class="visibility-tag">
+                        {% if recipe.is_public %}Public{% else %}Private{% endif %}
+                    </span>
 
-    <p><b>Time:</b> {{ recipe.prep_time }} min</p>
-    <p><b>Visibility:</b> {% if recipe.is_public %}Public{% else %}Private{% endif %}</p>
+                </span>
 
-    {% if ingredients %}
+            </div>
 
-      <h2>Ingredients</h2>
-      <ul>
-        {% for ri in ingredients %}
-          <li>
-              {{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name|capfirst }}
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+        </div>
 
-    <h2>Instructions</h2>
-    <p>{{ recipe.instructions|linebreaks }}</p>
+        <a class="button button-main" href="{% url 'my_recipe_edit' recipe.pk %}">Edit recipe</a>
 
-    {% if recipe.image %}
-        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 420px; height:auto;">
-    {% endif %}
+    </section>
+
+    <section class="panel">
+
+        {% if recipe.description %}
+            <div class="text-block">{{ recipe.description }}</div>
+        {% endif %}
+
+        {% if ingredients %}
+
+            <h2 class="section-title">Ingredients</h2>
+
+            <ul class="bullets">
+
+                {% for ri in ingredients %}
+                    <li>{{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name|capfirst }}</li>
+                {% endfor %}
+
+            </ul>
+
+        {% endif %}
+
+        <h2 class="section-title">Instructions</h2>
+        <div class="text-block">{{ recipe.instructions|linebreaks }}</div>
+
+        {% if recipe.image %}
+
+            <div class="photo-block">
+                <img class="recipe-photo" src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+            </div>
+
+        {% endif %}
+
+    </section>
 {% endblock %}

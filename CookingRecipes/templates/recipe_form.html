@@ -1,25 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{% if mode == "edit" %}Edit Recipe{% else %}New Recipe{% endif %}</h1>
 
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% if mode == "edit" %}Save{% else %}Create{% endif %}</button>
-</form>
+
+<section class="page-header">
+
+    <h1 class="page-title">
+        {% if mode == "edit" %}Edit recipe{% else %}New recipe{% endif %}
+    </h1>
+
+</section>
+
+<section class="panel">
+
+    <form method="post" enctype="multipart/form-data" class="recipe-form" novalidate>
+        {% csrf_token %}
+
+        <div class="django-fields">
+            {{ form.as_p }}
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="button button-main">
+                {% if mode == "edit" %}Save{% else %}Create{% endif %}
+            </button>
+
+            <a class="button button-quiet" href="{% url 'my_recipe_list' %}">Cancel</a>
+        </div>
+
+    </form>
+</section>
 
 {% if mode == "edit" %}
-  <hr>
-  <h2>Ingredients</h2>
-  <ul id="ingredients-list">
-    {% for ri in ingredients %}
-      <li>{{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name }}</li>
-    {% empty %}
-      <li>No ingredients yet.</li>
-    {% endfor %}
-  </ul>
 
+    <section class="panel">
 
+        <h2 class="section-title">Ingredients</h2>
+
+        <ul id="ingredients-list" class="bullets">
+            {% for ri in ingredients %}
+                <li>{{ ri.amount }} {{ ri.unit }} {{ ri.ingredient.name }}</li>
+            {% empty %}
+                <li class="empty-note">No ingredients yet.</li>
+            {% endfor %}
+        </ul>
+
+    </section>
 {% endif %}
 
 {% endblock %}

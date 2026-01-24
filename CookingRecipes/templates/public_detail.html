@@ -3,13 +3,27 @@
 {% block title %}{{ recipe.name }}{% endblock %}
 
 {% block content %}
-    <h1>{{ recipe.name }}</h1>
 
-    <p><b>Time:</b>{{ recipe.prep_time }}min</p>
+    <section class="page-header">
+    <h1 class="page-title">{{ recipe.name }}</h1>
 
-    {% if ingredients %}
-      <h2>Ingredients</h2>
-      <ul>
+    {% if recipe.description %}
+
+        <p class="page-subtitle">{{ recipe.description }}</p>
+
+    {% endif %}
+
+    <div class="info-line">
+        <span class="info-item"><strong>Time:</strong> {{ recipe.prep_time }} min</span>
+    </div>
+
+    </section>
+
+    <section class="panel">
+
+     {% if ingredients %}
+      <h2 class="section-title">Ingredients</h2>
+      <ul class="bullets">
         {% for i in ingredients %}
           <li>
             {{ i.amount }} {{ i.unit }} {{ i.ingredient.name|capfirst }}
@@ -18,11 +32,22 @@
       </ul>
     {% endif %}
 
-    <h2>Instructions</h2>
-    <p>{{ recipe.instructions|linebreaks }}</p>
+    <h2 class="section-title">Instructions</h2>
+    <div class="text-block">{{ recipe.instructions|linebreaks }}</div>
+
+
 
     {% if recipe.image %}
-        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="max-width: 420px; height:auto;">
+       <div class="photo-block">
+         <img class="recipe-photo" src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+
+       </div>
     {% endif %}
+
+    </section>
+
+
+
+
 
 {% endblock %}

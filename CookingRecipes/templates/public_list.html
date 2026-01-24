@@ -3,70 +3,90 @@
 {% block title %}Public Recipes{% endblock %}
 
 {% block content %}
-    <h1>Public Recipes</h1>
+    <section class="page-header">
 
-    <form method="get" style="margin-bottom: 1rem;">
-        <div>
-            <label for="q">
-                Search for title
-            </label><br>
+    <h1 class="page-title">Public recipes</h1>
+    <p class="page-subtitle">Search and filter recipes shared by all users.</p>
+
+    </section>
+
+    <section class="panel">
+
+    <form method="get" class="filters" novalidate>
+        <div class="form-row">
+
+            <label class="form-label" for="q">Search for title</label>
             <input
+                class="form-input"
                 id="q"
                 type="text"
                 name="q"
                 value="{{ q }}"
                 minlength="2"
                 placeholder="min 2 characters">
+
+            <div class="form-hint">Tip: type at least 2 characters.</div>
+
         </div>
 
-        <div style="margin-top: 0.5rem;">
-            <label for="max_time">
-                Max time (minutes)
-            </label><br>
+        <div class="form-row">
+
+            <label class="form-label" for="max_time">Max time (minutes)</label>
             <input
+                class="form-input"
                 id="max_time"
                 type="number"
                 name="max_time"
                 value="{{ max_time }}"
                 min="1"
-                placeholder="e.g. 35"
-            >
+                placeholder="e.g. 35">
+
         </div>
 
-        <div style="margin-top: 0.5rem">
-            <label for="ingredient">
-                Ingredients in the recipe
-            </label>
-            <select id="ingredient" name="ingredient" multiple size="6">
+        <div class="form-row form-row-wide">
+
+            <label class="form-label" for="ingredient">Ingredients in the recipe</label>
+            <select class="form-select" id="ingredient" name="ingredient" multiple size="6">
                 {% for ing in ingredients %}
                     <option value="{{ ing.id }}"
-                            {% if ing.id|stringformat:"s" in ingredient_ids %}
-                                selected
-                            {% endif %}>
-                    {{ ing.name | capfirst }}
+                            {% if ing.id|stringformat:"s" in ingredient_ids %}selected{% endif %}>
+                        {{ ing.name|capfirst }}
                     </option>
                 {% endfor %}
             </select>
 
-        </div>
-
-        <div style="margin-top: 0.75rem">
-            <button type="submit">Apply</button>
-            <a href="{%  url 'public_recipe_list' %}">Cancel</a>
+            <div class="form-hint">Hold Ctrl / Cmd to pick multiple.</div>
 
         </div>
 
+        <div class="form-actions form-row-wide">
+
+            <button type="submit" class="button button-main">Apply</button>
+            <a class="button button-quiet" href="{% url 'public_recipe_list' %}">Cancel</a>
+
+        </div>
     </form>
+    </section>
 
-    <ul>
-    {% for recipe in recipes %}
-        <li>
-        <a href="{% url 'public_recipe_detail' recipe.pk  %}">{{recipe.name}}</a>
-        </li>
-        {% empty %}
-            <li>
-            No public recipes yet.
+    <section class="panel">
+
+    <ul class="recipe-list">
+        {% for recipe in recipes %}
+
+            <li class="recipe-line">
+                <a class="recipe-link" href="{% url 'public_recipe_detail' recipe.pk %}">
+                    {{ recipe.name }}
+                </a>
             </li>
-    {% endfor %}
+
+        {% empty %}
+
+            <li class="empty-note">No public recipes yet.</li>
+
+        {% endfor %}
     </ul>
+
+    </section>
+
+
 {% endblock %}
