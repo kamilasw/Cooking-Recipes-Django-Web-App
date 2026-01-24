@@ -27,6 +27,7 @@ createBtn.addEventListener("click", async()=>{
 
     const data = await res.json();
 
+
     if(!res.ok){
         msg.textContent=data.error;
         return;
@@ -34,14 +35,18 @@ createBtn.addEventListener("click", async()=>{
 
     //add this to the select ingredient for the recipe
     const select = document.getElementById("ingredient");
-    const opt = document.createElement("option");
-    opt.value = data.id;
-    opt.textContent = data.name;
-    select.appendChild(opt);
-    select.value = data.id;
 
+
+
+    if (!select.querySelector(`option[value="${data.id}"]`)) {
+
+        select.add(new Option(data.name, data.id));
+    }
+
+    select.value = data.id;
     createForm.reset();
-    msg.textContent = "Ingredient created."
+    msg.textContent = data.created ? "Ingredient created." : "Ingredient already exists.";
+
 
 });
 

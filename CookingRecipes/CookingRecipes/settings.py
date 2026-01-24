@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-+fuqd-_kuqp)%kniro!-iumd1x)il2f-w2lwhrssxmm2=yo=hw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# i added this here to add a styled 404 page and changes the debug to true
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost"] but then static css doesnt load so whatever
 
 
 # Application definition
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'recipes',
-    'accounts'
+    'accounts',
 
 ]
 
@@ -118,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -159,6 +159,8 @@ def create_ingredient(request):
         return JsonResponse({"ok":False,"error":"name is too short (min 3 characters)"}, status=400)
     else:
         ingredient, created = Ingredient.objects.get_or_create(name=name.lower())
+
+
         return JsonResponse({"ok": True, "id": ingredient.id, "name": ingredient.name, "created": created})
 
 @login_required(login_url='/accounts/login/')

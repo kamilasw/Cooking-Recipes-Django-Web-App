@@ -128,3 +128,59 @@
     flex-wrap: wrap;
     margin-top: var(--space-2);
 }
+
+.form-error{
+margin-top: 0.25rem;
+color: #b23a3a;
+font-weight: 600;
+font-size: 0.95rem;
+}
+
+
+.auth-form{
+    padding: .6rem;
+}
+
+.auth-form .django-fields p{
+    margin: 0;
+    display: grid;
+    gap: .4rem;
+}
+
+.auth-form .django-fields label{
+    font-weight: 600;
+}
+
+.auth-form .django-fields :is(input, select, textarea){
+    width: min(40rem, 100%);
+    padding: .7rem .85rem;
+
+    border-radius: calc(var(--radius) * .65);
+    border: .08rem solid var(--panel-border);
+    background: var(--panel);
+
+    color: var(--text);
+    font: inherit;
+}
+
+
+.auth-form .django-fields :is(small, .helptext){
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.auth-form .django-fields ul{
+    list-style: none;
+    margin: 0 0 .6rem;
+    padding: .6rem .8rem;
+    border-radius: calc(var(--radius) * .65);
+    border: .08rem solid color-mix(in srgb, #b23a3a 35%, var(--panel-border));
+    background: color-mix(in srgb, #b23a3a 12%, var(--panel));
+    color: color-mix(in srgb, #b23a3a 85%, var(--text));
+    font-weight: 600;
+}
+
+.auth-form .django-fields ul li{
+    margin: 0;
+}
+
