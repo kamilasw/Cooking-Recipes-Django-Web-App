@@ -149,7 +149,7 @@ def my_recipe_delete(request,pk):
     messages.success(request,"Recipe deleted")
     return redirect("my_recipe_list")
 
-# AJAX api for ingredient managing:
+# AJAX api for ingredient managing (i dont use it cuz i rewrote it for the API requirement, it's in the api folder):
 
 @login_required(login_url='/accounts/login/')
 @require_POST

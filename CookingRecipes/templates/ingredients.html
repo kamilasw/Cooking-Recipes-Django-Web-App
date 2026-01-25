@@ -24,7 +24,7 @@
 
 
     <form class="recipe-form" id="add-ing-form"
-    data-url="{% url 'add_ingredient_to_recipe' recipe.pk %}">
+    data-url="{% url 'api_add_ingredient_to_recipe' recipe.pk %}">
 
         <div class="filters">
             <div class="form-row form-row-wide">
@@ -82,7 +82,7 @@
 
 
     <form class="recipe-form" id="create-ing-form"
-    data-url="{% url 'create_ingredient' %}">
+    data-url="{% url 'api_create_ingredient' %}">
         <div class="filters">
             <div class="form-row form-row-wide">
                 <label class="form-label" for="new-ingredient-name">Ingredient name</label>
